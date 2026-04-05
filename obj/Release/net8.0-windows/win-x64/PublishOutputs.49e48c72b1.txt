@@ -1,0 +1,12 @@
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\Argus.exe
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\web.config
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\rules.json
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\Argus.dll
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\Argus.deps.json
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\Argus.runtimeconfig.json
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\Argus.pdb
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\UglyToad.PdfPig.Core.dll
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\UglyToad.PdfPig.dll
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\UglyToad.PdfPig.Fonts.dll
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\UglyToad.PdfPig.Tokenization.dll
+C:\Users\User\Documents\PROJECTS\ARGUS\V1\argus-web-only\dist\win-x64-clean\UglyToad.PdfPig.Tokens.dll

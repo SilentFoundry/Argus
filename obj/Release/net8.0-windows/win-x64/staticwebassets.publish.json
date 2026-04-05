@@ -1,0 +1,77 @@
+{
+  "Version": 1,
+  "Hash": "qAUH+7WLxbQc20mBeFxr2atvYnpE8355tu18iFf6k1M=",
+  "Source": "Argus",
+  "BasePath": "_content/Argus",
+  "Mode": "Default",
+  "ManifestType": "Publish",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Argus\\wwwroot",
+      "Source": "Argus",
+      "ContentRoot": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\",
+      "BasePath": "_content/Argus",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\app.js",
+      "SourceId": "Argus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\",
+      "BasePath": "_content/Argus",
+      "RelativePath": "app.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\app.js"
+    },
+    {
+      "Identity": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\index.html",
+      "SourceId": "Argus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\",
+      "BasePath": "_content/Argus",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\index.html"
+    },
+    {
+      "Identity": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\styles.css",
+      "SourceId": "Argus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\",
+      "BasePath": "_content/Argus",
+      "RelativePath": "styles.css",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\styles.css"
+    }
+  ]
+}

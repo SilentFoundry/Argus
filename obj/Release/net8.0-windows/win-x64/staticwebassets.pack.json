@@ -1,0 +1,33 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\app.js",
+      "PackagePath": "staticwebassets\\app.js"
+    },
+    {
+      "Id": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\index.html",
+      "PackagePath": "staticwebassets\\index.html"
+    },
+    {
+      "Id": "C:\\Users\\User\\Documents\\PROJECTS\\ARGUS\\V1\\argus-web-only\\wwwroot\\styles.css",
+      "PackagePath": "staticwebassets\\styles.css"
+    },
+    {
+      "Id": "obj\\Release\\net8.0-windows\\win-x64\\staticwebassets\\msbuild.Argus.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0-windows\\win-x64\\staticwebassets\\msbuild.build.Argus.props",
+      "PackagePath": "build\\Argus.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0-windows\\win-x64\\staticwebassets\\msbuild.buildMultiTargeting.Argus.props",
+      "PackagePath": "buildMultiTargeting\\Argus.props"
+    },
+    {
+      "Id": "obj\\Release\\net8.0-windows\\win-x64\\staticwebassets\\msbuild.buildTransitive.Argus.props",
+      "PackagePath": "buildTransitive\\Argus.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
