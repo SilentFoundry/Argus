@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <AssemblyName>Argus</AssemblyName>
+    <RootNamespace>FileOrganizer</RootNamespace>
+    <DefaultItemExcludes>$(DefaultItemExcludes);dist\**;dist-winforms\**;winforms\**;_web-smoke-*\**;_build-*\**;_metadata-*\**;_publish-*\**;_ui-test\**;_dist-test\**</DefaultItemExcludes>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="MainForm.cs" />
+    <Compile Remove="DesktopMainForm.cs" />
+    <Compile Remove="Program.WinForms.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="rules.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="index.html">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="app.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="styles.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="web.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="UglyToad.PdfPig">
+      <HintPath>UglyToad.PdfPig.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Core">
+      <HintPath>UglyToad.PdfPig.Core.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Fonts">
+      <HintPath>UglyToad.PdfPig.Fonts.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Tokenization">
+      <HintPath>UglyToad.PdfPig.Tokenization.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+    <Reference Include="UglyToad.PdfPig.Tokens">
+      <HintPath>UglyToad.PdfPig.Tokens.dll</HintPath>
+      <Private>true</Private>
+    </Reference>
+  </ItemGroup>
+</Project>
+
