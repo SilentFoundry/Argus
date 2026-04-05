@@ -1,0 +1,473 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ARGUS // File Operations</title>
+    <link rel="stylesheet" href="/styles.css">
+</head>
+<body data-theme-mode="system" data-effective-theme="dark">
+    <div class="app-shell">
+        <header class="topbar panel">
+            <div class="brand-block">
+                <div class="brand-mark">ARGUS</div>
+                <div>
+                    <h1>ARGUS // File Operations</h1>
+                    <p>Single-shell local organizer with preview, undo, conversion, and media-aware naming.</p>
+                </div>
+            </div>
+            <div class="topbar-actions">
+                <div class="stat-card slim">
+                    <span>Theme</span>
+                    <select id="themeSelect">
+                        <option value="light">Light</option>
+                        <option value="dark">Dark</option>
+                        <option value="system">System</option>
+                    </select>
+                </div>
+                <div class="stat-card slim">
+                    <span>Target</span>
+                    <strong id="activeTaskLabel">Find</strong>
+                </div>
+                <div class="stat-card slim">
+                    <span>Phase</span>
+                    <strong id="progressLabel">Idle</strong>
+                </div>
+                <div class="stat-card slim">
+                    <span>Result</span>
+                    <strong id="resultLabel">No run yet</strong>
+                </div>
+            </div>
+        </header>
+
+        <section class="workspace panel">
+            <div class="workspace-grid">
+                <label class="field-block">
+                    <span>Source</span>
+                    <div class="field-row">
+                        <input id="sourcePath" type="text" autocomplete="off" spellcheck="false" placeholder="Folder or drive to scan">
+                        <button id="browseSourceButton" type="button">Browse</button>
+                    </div>
+                </label>
+                <label class="field-block">
+                    <span>Destination</span>
+                    <div class="field-row">
+                        <input id="destinationPath" type="text" autocomplete="off" spellcheck="false" placeholder="Folder where organized output goes">
+                        <button id="browseDestinationButton" type="button">Browse</button>
+                    </div>
+                </label>
+                <label class="field-block">
+                    <span>Tag Manifest</span>
+                    <div class="field-row">
+                        <input id="manifestPath" type="text" autocomplete="off" spellcheck="false" placeholder="JSON path for tag export">
+                        <button id="browseManifestButton" type="button">Browse</button>
+                    </div>
+                </label>
+                <label class="field-block">
+                    <span>Rules</span>
+                    <div class="field-row">
+                        <input id="rulesPath" type="text" autocomplete="off" spellcheck="false" placeholder="Rules file">
+                        <button id="browseRulesButton" type="button">Browse</button>
+                    </div>
+                </label>
+            </div>
+        </section>
+
+        <nav class="tabbar panel" aria-label="Primary tabs">
+            <button type="button" class="tab-button is-active" data-tab="find">Find</button>
+            <button type="button" class="tab-button" data-tab="sort">Sort</button>
+            <button type="button" class="tab-button" data-tab="rename">Rename</button>
+            <button type="button" class="tab-button" data-tab="convert">Convert</button>
+            <button type="button" class="tab-button" data-tab="media">Media</button>
+            <button type="button" class="tab-button" data-tab="logs">Logs</button>
+            <button type="button" class="tab-button" data-tab="config">Config</button>
+            <button type="button" class="tab-button" data-tab="settings">Settings</button>
+            <button type="button" class="tab-button" data-tab="about">About</button>
+        </nav>
+
+        <main class="content-grid">
+            <section class="viewport panel">
+                <section class="tab-panel is-active" data-panel="find">
+                    <div class="split-grid">
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Find Profile</h2>
+                                <p>Pull only the file types you ask for and send them into a clean destination lane.</p>
+                            </div>
+                            <div class="form-grid two-col">
+                                <label class="field-block">
+                                    <span>Mode</span>
+                                    <select id="findModeSelect">
+                                        <option value="Copy">Copy</option>
+                                        <option value="Move">Move</option>
+                                    </select>
+                                </label>
+                                <label class="field-block">
+                                    <span>Duplicates</span>
+                                    <select id="findDuplicateHandlingSelect">
+                                        <option value="Rename">Rename</option>
+                                        <option value="Skip">Skip</option>
+                                        <option value="Overwrite">Overwrite</option>
+                                        <option value="KeepNewest">Keep newest</option>
+                                        <option value="CompareByHash">Compare by hash</option>
+                                    </select>
+                                </label>
+                                <label class="field-block span-all">
+                                    <span>File Types</span>
+                                    <input id="findExtensions" type="text" autocomplete="off" spellcheck="false" placeholder=".pdf, .docx, .jpg">
+                                </label>
+                                <label class="toggle-card span-all">
+                                    <input id="findIncludeSubfolders" type="checkbox" checked>
+                                    <div>
+                                        <strong>Include subfolders</strong>
+                                        <p>Scan recursively beneath the selected source.</p>
+                                    </div>
+                                </label>
+                            </div>
+                        </section>
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Presets</h2>
+                                <p>Fast filters for common hunts.</p>
+                            </div>
+                            <div class="chip-grid">
+                                <button type="button" class="preset-button" data-preset=".pdf, .docx, .txt, .epub">Documents</button>
+                                <button type="button" class="preset-button" data-preset=".jpg, .jpeg, .png, .webp, .heic">Images</button>
+                                <button type="button" class="preset-button" data-preset=".mp3, .m4a, .flac, .wav">Audio</button>
+                                <button type="button" class="preset-button" data-preset=".mp4, .mov, .mkv, .avi">Video</button>
+                                <button type="button" class="preset-button" data-preset=".zip, .rar, .7z">Archives</button>
+                                <button type="button" class="preset-button" data-preset="">Clear</button>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-panel="sort">
+                    <div class="split-grid">
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Sort Profile</h2>
+                                <p>Run a full organize pass over a folder or drive.</p>
+                            </div>
+                            <div class="form-grid two-col">
+                                <label class="field-block">
+                                    <span>Mode</span>
+                                    <select id="sortModeSelect">
+                                        <option value="Move">Move</option>
+                                        <option value="Copy">Copy</option>
+                                    </select>
+                                </label>
+                                <label class="field-block">
+                                    <span>Duplicates</span>
+                                    <select id="sortDuplicateHandlingSelect">
+                                        <option value="Rename">Rename</option>
+                                        <option value="Skip">Skip</option>
+                                        <option value="Overwrite">Overwrite</option>
+                                        <option value="KeepNewest">Keep newest</option>
+                                        <option value="CompareByHash">Compare by hash</option>
+                                    </select>
+                                </label>
+                                <label class="field-block span-all">
+                                    <span>Organize By</span>
+                                    <select id="sortOrganizationModeSelect">
+                                        <option value="ByType">Type</option>
+                                        <option value="ByExtension">Extension</option>
+                                        <option value="ByYearMonth">Year / Month</option>
+                                        <option value="ByDateModified">Date Modified</option>
+                                        <option value="BySize">Size</option>
+                                        <option value="ByKeyword">Keyword</option>
+                                        <option value="CategoryYearMonth">Category / Year / Month</option>
+                                    </select>
+                                </label>
+                                <label class="toggle-card">
+                                    <input id="sortIncludeSubfolders" type="checkbox" checked>
+                                    <div><strong>Include subfolders</strong><p>Process the whole tree.</p></div>
+                                </label>
+                                <label class="toggle-card">
+                                    <input id="sortUseExtensionSubfolders" type="checkbox">
+                                    <div><strong>Use extension subfolders</strong><p>Add an extra extension tier where supported.</p></div>
+                                </label>
+                            </div>
+                        </section>
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Sort Presets</h2>
+                                <p>Quick folder architecture swaps.</p>
+                            </div>
+                            <div class="chip-grid">
+                                <button type="button" class="preset-button" data-sort-mode="ByType">Type</button>
+                                <button type="button" class="preset-button" data-sort-mode="ByExtension">Extension</button>
+                                <button type="button" class="preset-button" data-sort-mode="ByYearMonth">Year / Month</button>
+                                <button type="button" class="preset-button" data-sort-mode="ByDateModified">Date</button>
+                                <button type="button" class="preset-button" data-sort-mode="ByKeyword">Keyword</button>
+                                <button type="button" class="preset-button" data-sort-mode="CategoryYearMonth">Category / Year / Month</button>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-panel="rename">
+                    <div class="split-grid">
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Rename Policy</h2>
+                                <p>Metadata-aware renaming now applies to documents and, when enabled, media.</p>
+                            </div>
+                            <div class="form-grid">
+                                <label class="toggle-card">
+                                    <input id="includeRename" type="checkbox" checked>
+                                    <div><strong>Include rename</strong><p>Use metadata-aware naming during Find or Sort runs.</p></div>
+                                </label>
+                                <label class="field-block">
+                                    <span>Metadata Mode</span>
+                                    <select id="metadataRenameModeSelect">
+                                        <option value="Disabled">Disabled</option>
+                                        <option value="TitleOnly">Title only</option>
+                                        <option value="ContentHeadingOnly">Content heading only</option>
+                                        <option value="TitleThenContent">Title then content</option>
+                                    </select>
+                                </label>
+                                <label class="field-block">
+                                    <span>Naming Pattern</span>
+                                    <input id="renamePattern" type="text" value="YYYY-MM-DD_SHORT-TITLE" readonly>
+                                </label>
+                            </div>
+                        </section>
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Supported Inputs</h2>
+                                <p>Current metadata readers.</p>
+                            </div>
+                            <div class="pill-grid">
+                                <span class="pill">PDF</span>
+                                <span class="pill">DOCX</span>
+                                <span class="pill">PPTX</span>
+                                <span class="pill">XLSX</span>
+                                <span class="pill">EPUB</span>
+                                <span class="pill">MP3</span>
+                                <span class="pill">M4A</span>
+                                <span class="pill">MP4</span>
+                                <span class="pill">MOV</span>
+                                <span class="pill">JPG</span>
+                                <span class="pill">PNG</span>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-panel="convert">
+                    <div class="stack-grid">
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Conversion Pipeline</h2>
+                                <p>This is now wired to the backend. Built-in image conversion is available immediately. ffmpeg, LibreOffice, and ImageMagick are used when present.</p>
+                            </div>
+                            <div class="cap-grid">
+                                <div class="cap-card"><span>Shell</span><strong id="capShellMode">Browser shell</strong></div>
+                                <div class="cap-card"><span>Images</span><strong id="capImagePipeline">Built-in image pipeline</strong></div>
+                                <div class="cap-card"><span>Audio / Video</span><strong id="capAudioVideoPipeline">Checking...</strong></div>
+                                <div class="cap-card"><span>Documents</span><strong id="capDocumentPipeline">Checking...</strong></div>
+                            </div>
+                        </section>
+                        <section class="panel inner-panel">
+                            <div class="form-grid two-col">
+                                <label class="toggle-card span-all">
+                                    <input id="includeConvert" type="checkbox">
+                                    <div><strong>Include convert</strong><p>Run a conversion pass after organize or find completes.</p></div>
+                                </label>
+                                <label class="field-block">
+                                    <span>Source Format</span>
+                                    <select id="convertSourceFormatSelect">
+                                        <option value="Any">Any</option>
+                                        <option value="Document">Document</option>
+                                        <option value="Image">Image</option>
+                                        <option value="Audio">Audio</option>
+                                        <option value="Video">Video</option>
+                                    </select>
+                                </label>
+                                <label class="field-block">
+                                    <span>Target Format</span>
+                                    <select id="convertTargetFormatSelect">
+                                        <option value="Keep">Keep source type</option>
+                                        <option value="Pdf">PDF</option>
+                                        <option value="Jpg">JPG</option>
+                                        <option value="Png">PNG</option>
+                                        <option value="Mp3">MP3</option>
+                                        <option value="Wav">WAV</option>
+                                        <option value="Mp4">MP4</option>
+                                    </select>
+                                </label>
+                                <label class="field-block span-all">
+                                    <span>Quality</span>
+                                    <select id="convertQualitySelect">
+                                        <option value="Keep">Keep original</option>
+                                        <option value="Balanced">Balanced</option>
+                                        <option value="Compact">Compact</option>
+                                    </select>
+                                </label>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-panel="media">
+                    <div class="three-grid">
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Music</h2>
+                                <p>Use embedded metadata for rename decisions on supported audio files.</p>
+                            </div>
+                            <label class="toggle-card">
+                                <input id="mediaMusicEnabled" type="checkbox" checked>
+                                <div><strong>Use metadata</strong><p>Artist / title metadata can drive the rename result.</p></div>
+                            </label>
+                        </section>
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Images</h2>
+                                <p>Use image capture data when available. This affects rename behavior for supported image files.</p>
+                            </div>
+                            <label class="toggle-card">
+                                <input id="mediaImagesEnabled" type="checkbox" checked>
+                                <div><strong>Use image metadata</strong><p>Prefer EXIF date data when building image names.</p></div>
+                            </label>
+                        </section>
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Video</h2>
+                                <p>Use embedded metadata for supported video and audio-container formats.</p>
+                            </div>
+                            <label class="toggle-card">
+                                <input id="mediaVideoEnabled" type="checkbox" checked>
+                                <div><strong>Use metadata</strong><p>Title and descriptive tags can influence rename results.</p></div>
+                            </label>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-panel="logs">
+                    <div class="split-grid logs-split">
+                        <section class="panel inner-panel">
+                            <div class="section-head spaced">
+                                <div>
+                                    <h2>Run History</h2>
+                                    <p>Every run, every undo, every breadcrumb.</p>
+                                </div>
+                                <div class="button-row">
+                                    <button id="refreshHistoryButton" type="button">Refresh</button>
+                                    <button id="undoSelectedButton" type="button">Undo Selected</button>
+                                    <button id="openHistoryLogButton" type="button">Run Log</button>
+                                    <button id="openOperationLogButton" type="button">Ops Log</button>
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table class="data-table" id="historyTable">
+                                    <thead><tr><th>Time</th><th>Type</th><th>Mode</th><th>Organize</th><th>Changed</th></tr></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <pre class="detail-console" id="historyDetail"></pre>
+                        </section>
+                        <section class="panel inner-panel">
+                            <div class="section-head spaced">
+                                <div>
+                                    <h2>Log Files</h2>
+                                    <p>Plain-text run and undo traces.</p>
+                                </div>
+                                <div class="button-row">
+                                    <button id="refreshLogsButton" type="button">Refresh</button>
+                                    <button id="openSelectedLogButton" type="button">Open</button>
+                                </div>
+                            </div>
+                            <div class="table-wrap">
+                                <table class="data-table" id="logsTable">
+                                    <thead><tr><th>Time</th><th>File</th></tr></thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                            <pre class="detail-console" id="logDetail"></pre>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-panel="config">
+                    <div class="split-grid">
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Paths</h2>
+                                <p>Open the files and folders ARGUS actually uses.</p>
+                            </div>
+                            <div class="config-stack">
+                                <div class="config-row"><span>Rules</span><code id="configRulesPath"></code><div class="button-row"><button id="configBrowseRulesButton" type="button">Browse</button><button id="configOpenRulesButton" type="button">Open</button><button id="configUseDefaultRulesButton" type="button">Default</button></div></div>
+                                <div class="config-row"><span>Settings</span><code id="configSettingsPath"></code><div class="button-row"><button id="openSettingsPathButton" type="button">Open</button></div></div>
+                                <div class="config-row"><span>History</span><code id="configHistoryPath"></code><div class="button-row"><button id="openHistoryPathButton" type="button">Open</button></div></div>
+                                <div class="config-row"><span>Logs</span><code id="configLogsPath"></code><div class="button-row"><button id="openLogsPathButton" type="button">Open</button></div></div>
+                                <div class="config-row"><span>Reports</span><code id="configReportsPath"></code><div class="button-row"><button id="openReportsPathButton" type="button">Open</button></div></div>
+                            </div>
+                        </section>
+                        <section class="panel inner-panel">
+                            <div class="section-head spaced">
+                                <div>
+                                    <h2>Rules Preview</h2>
+                                    <p>Immediate look at the active rules file.</p>
+                                </div>
+                                <button id="refreshRulesPreviewButton" type="button">Refresh</button>
+                            </div>
+                            <pre class="detail-console tall" id="rulesPreview"></pre>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-panel="settings">
+                    <div class="split-grid">
+                        <section class="panel inner-panel">
+                            <div class="section-head">
+                                <h2>Run Behavior</h2>
+                                <p>Output defaults and post-run actions.</p>
+                            </div>
+                            <div class="form-grid two-col">
+                                <label class="toggle-card"><input id="writeTagManifest" type="checkbox"><div><strong>Write tag manifest</strong><p>Export a JSON tag map for executed operations.</p></div></label>
+                                <label class="toggle-card"><input id="cleanEmptyFolders" type="checkbox"><div><strong>Clean empty folders</strong><p>Prune empty folders after a move run.</p></div></label>
+                                <label class="toggle-card"><input id="openDestinationWhenDone" type="checkbox"><div><strong>Open destination</strong><p>Pop the output folder when a run completes.</p></div></label>
+                                <label class="toggle-card"><input id="copySummaryToClipboard" type="checkbox"><div><strong>Copy summary</strong><p>Send the run summary to the clipboard.</p></div></label>
+                                <label class="toggle-card span-all"><input id="exportReport" type="checkbox"><div><strong>Export report</strong><p>Write a report file into the reports folder for each run.</p></div></label>
+                                <label class="field-block span-all"><span>Report Format</span><select id="reportFormatSelect"><option value="Text">Text</option><option value="Json">Json</option></select></label>
+                            </div>
+                        </section>
+                    </div>
+                </section>
+
+                <section class="tab-panel" data-panel="about">
+                    <div class="stats-grid">
+                        <div class="stat-card"><span>Version</span><strong id="aboutVersion">-</strong></div>
+                        <div class="stat-card"><span>Host URL</span><strong id="aboutHostUrl">-</strong></div>
+                        <div class="stat-card"><span>App Folder</span><strong id="aboutAppDirectory">-</strong></div>
+                        <div class="stat-card"><span>Data Folder</span><strong id="aboutDataDirectory">-</strong></div>
+                    </div>
+                </section>
+            </section>
+
+            <aside class="console-rail panel">
+                <div class="section-head spaced">
+                    <div>
+                        <h2>Command Deck</h2>
+                        <p>Ctrl+Enter previews. Ctrl+Shift+Enter runs.</p>
+                    </div>
+                    <button id="copyConsoleButton" type="button">Copy</button>
+                </div>
+                <div class="button-row command-row">
+                    <button class="primary" id="previewButton" type="button">Preview</button>
+                    <button class="primary" id="runButton" type="button">Run</button>
+                    <button id="stopButton" type="button" disabled>Stop</button>
+                    <button id="undoLastButton" type="button">Undo Last</button>
+                    <button id="openOutputButton" type="button">Open Output</button>
+                    <button id="openLogsButton" type="button">Open Logs</button>
+                </div>
+                <div class="progress-track" id="progressTrack"><div class="progress-fill" id="progressFill"></div></div>
+                <pre class="detail-console rail-console" id="outputConsole"></pre>
+            </aside>
+        </main>
+    </div>
+    <script type="module" src="/app.js"></script>
+</body>
+</html>
